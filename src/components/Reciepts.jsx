@@ -4,10 +4,10 @@ import { useEffect } from "react";
 import Modal from "react-modal";
 import "./Reciepts.css";
 
-const Reciepts = ({ recipes, API_KEY }) => {
+const Reciepts = ({ recipes, API_KEY, getReciept }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [recieptId, setRecieptId] = useState(0);
-  const [recieptData, setRecieptData] = useState([[]]);
+  const [recieptData, setRecieptData] = useState([]);
 
   const recieptOpenHandler = (id) => {
     setRecieptId(id);
@@ -20,7 +20,6 @@ const Reciepts = ({ recipes, API_KEY }) => {
         `https://api.spoonacular.com/recipes/${recieptId}/information?apiKey=${API_KEY}&includeNutrition=false`
       );
       const data = await response.json();
-      console.log(data);
       setRecieptData(data);
     };
 
@@ -29,6 +28,10 @@ const Reciepts = ({ recipes, API_KEY }) => {
     }
   }, [recieptId]);
 
+  const addToFavorites = () => {
+    getReciept(recieptData)
+  }
+
   return (
     <div className="reciepts">
       <Modal
@@ -36,8 +39,14 @@ const Reciepts = ({ recipes, API_KEY }) => {
         isOpen={modalIsOpen}
         onRequestClose={() => setModalIsOpen(false)}
       >
-        <h1 className="modalTitle">{recieptData.title}</h1>
-        <p className="modalText" dangerouslySetInnerHTML={{ __html: recieptData.summary }} />
+        <div className="recieptContainer">
+          <h1 className="modalTitle">{recieptData.title}</h1>
+          <button onClick={addToFavorites} className="favBtn">Add to favorites</button>
+        </div>
+        <p
+          className="modalText"
+          dangerouslySetInnerHTML={{ __html: recieptData.summary }}
+        />
         <img className="modalImage" src={recieptData.image} alt="reciept img" />
         {recieptData.cuisines &&
           recieptData.cuisines.map((cuisine, index) => {

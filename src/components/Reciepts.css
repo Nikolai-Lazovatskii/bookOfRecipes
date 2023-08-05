@@ -89,3 +89,33 @@
   margin-right: 5px;
   margin-top: 5px;
 }
+
+.recieptContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.favBtn {
+  display: inline-block;
+  padding: 10px 15px;
+  font-size: 16px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  outline: none;
+  color: #fff;
+  background-color: #FF6347;
+  border: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.favBtn:hover {
+  background-color: #FF4500; 
+}
+
+.favBtn:active {
+  background-color: #FF6347;
+  transform: translateY(2px);
+}

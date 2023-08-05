@@ -4,10 +4,12 @@ import "./App.css";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Reciepts from "./components/Reciepts";
 import Search from "./components/Search";
+import Favorites from "./components/Favorites";
 
 function App() {
   const [searchTag, setSearchTag] = useState("");
   const [recipes, setRecipes] = useState([]);
+  const [reciept, setReciept] = useState([])
 
   const API_KEY = "9265df2e52994c5ea5707dc3714479af";
 
@@ -28,6 +30,11 @@ function App() {
   const getSearch = (text) => {
     setSearchTag(text);
   };
+
+  const getReciept = (favReciept) => {
+    setReciept(favReciept)
+    console.log(favReciept);
+  }
 
   return (
     <div className="app">
@@ -51,11 +58,11 @@ function App() {
             element={
               <div className="main">
                 <Search getSearch={getSearch} />
-                <Reciepts recipes={recipes} API_KEY={API_KEY} />
+                <Reciepts recipes={recipes} API_KEY={API_KEY} getReciept={getReciept} />
               </div>
             }
           />
-          <Route path="/favorites" element={<div>Hello</div>} />
+          <Route path="/favorites" element={<Favorites newFavReciept={reciept} />} />
         </Routes>
         <footer>Nikolai Lazovatskii, Pet Project - August 2023</footer>
       </Router>
