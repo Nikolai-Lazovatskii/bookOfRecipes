@@ -9,7 +9,8 @@ import Favorites from "./components/Favorites";
 function App() {
   const [searchTag, setSearchTag] = useState("");
   const [recipes, setRecipes] = useState([]);
-  const [reciept, setReciept] = useState([])
+  const [reciept, setReciept] = useState([]);
+  const [favoriteReciepts, setFavoriteReciepts] = useState([]);
 
   const API_KEY = "9265df2e52994c5ea5707dc3714479af";
 
@@ -32,9 +33,22 @@ function App() {
   };
 
   const getReciept = (favReciept) => {
-    setReciept(favReciept)
-    console.log(favReciept);
-  }
+    setReciept(favReciept);
+  };
+
+  useEffect(() => {
+    setFavoriteReciepts((prevReciepts) => {
+      if (
+        !prevReciepts.some(
+          (existingReciept) => existingReciept.id === reciept.id
+        )
+      ) {
+        return [...prevReciepts, reciept];
+      }
+      return prevReciepts;
+    });
+    console.log(favoriteReciepts);
+  }, [reciept]);
 
   return (
     <div className="app">
@@ -58,11 +72,18 @@ function App() {
             element={
               <div className="main">
                 <Search getSearch={getSearch} />
-                <Reciepts recipes={recipes} API_KEY={API_KEY} getReciept={getReciept} />
+                <Reciepts
+                  recipes={recipes}
+                  API_KEY={API_KEY}
+                  getReciept={getReciept}
+                />
               </div>
             }
           />
-          <Route path="/favorites" element={<Favorites newFavReciept={reciept} />} />
+          <Route
+            path="/favorites"
+            element={<Favorites favoriteReciepts={favoriteReciepts} />}
+          />
         </Routes>
         <footer>Nikolai Lazovatskii, Pet Project - August 2023</footer>
       </Router>

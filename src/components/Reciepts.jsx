@@ -29,8 +29,8 @@ const Reciepts = ({ recipes, API_KEY, getReciept }) => {
   }, [recieptId]);
 
   const addToFavorites = () => {
-    getReciept(recieptData)
-  }
+    getReciept(recieptData);
+  };
 
   return (
     <div className="reciepts">
@@ -41,7 +41,9 @@ const Reciepts = ({ recipes, API_KEY, getReciept }) => {
       >
         <div className="recieptContainer">
           <h1 className="modalTitle">{recieptData.title}</h1>
-          <button onClick={addToFavorites} className="favBtn">Add to favorites</button>
+          <button onClick={addToFavorites} className="favBtn">
+            Add to favorites
+          </button>
         </div>
         <p
           className="modalText"

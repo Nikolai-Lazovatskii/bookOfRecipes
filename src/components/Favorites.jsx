@@ -1,24 +1,25 @@
 /* eslint-disable react/prop-types */
-import { useRef } from "react";
-import { useEffect } from "react";
-import { useState } from "react";
+import "./Favorites.css";
 
-const Favorites = ({ newFavReciept }) => {
-  const [favoriteReciepts, setFavoriteReciepts] = useState([]);
-  const recieptsRef = useRef(favoriteReciepts);
-
-  useEffect(() => {
-    if (!recieptsRef.current.some(reciept => reciept.id === newFavReciept.id)) {
-        recieptsRef.current = [...recieptsRef.current, newFavReciept];
-        setFavoriteReciepts(recieptsRef.current);
-      }
-  }, [newFavReciept]);
-
+const Favorites = ({ favoriteReciepts }) => {
   return (
     <div className="favorites">
-      {favoriteReciepts.map((reciept) => {
-        return <p key={reciept.id}>Hello {reciept.title}</p>;
-      })}
+      {favoriteReciepts &&
+        favoriteReciepts.length > 0 &&
+        favoriteReciepts.map((reciept) => {
+          if (reciept.id && reciept.title && reciept.image) {
+            return (
+              <div className="recieptFav" key={reciept.id}>
+                <p className="recieptTextFav">{reciept.title}</p>
+                <img
+                  className="recieptImageFav"
+                  src={reciept.image}
+                  alt="reciept img"
+                />
+              </div>
+            );
+          }
+        })}
     </div>
   );
 };
