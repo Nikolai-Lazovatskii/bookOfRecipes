@@ -41,3 +41,22 @@
     max-width: 100%;
     border-radius: 15px;
 }
+
+.deleteBtn {
+    font-size: 18px;
+    color: white;
+    background-color: #ff6347;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: block;  /* изменили на block */
+    margin: 20px auto; /* автоматический отступ с обеих сторон для центрирования */
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.deleteBtn:hover {
+    background-color: #dc143c;
+}
