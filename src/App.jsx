@@ -81,7 +81,7 @@ function App() {
             </Link>
           </h2>
           <h2>
-            <Link to="/favorites" className="menuButton">
+            <Link to="/favorites" className="menuButton favoriteBtn">
               Favorites
             </Link>
           </h2>
