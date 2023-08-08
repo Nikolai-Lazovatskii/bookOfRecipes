@@ -1,23 +1,22 @@
 /* eslint-disable react/prop-types */
 import "./Favorites.css";
 import Modal from "react-modal";
-import { useState } from "react";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 
-const Favorites = ({ favoriteReciepts, deleteAllFavorites }) => {
+const Favorites = ({ favoriteReciepts, deleteAllFavorites, API_KEY }) => {
 
+  // State variables for modal handling and reciept information
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [recieptId, setRecieptId] = useState(0);
   const [recieptData, setRecieptData] = useState([]);
 
-
-  const API_KEY = "9265df2e52994c5ea5707dc3714479af";
-
+  // Handler to open receipt details
   const recieptOpenHandler = (id) => {
     setRecieptId(id);
     setModalIsOpen(true);
   };
 
+  // Effect hook to fetch receipt data based on ID
   useEffect(() => {
     const getRecieptInfo = async () => {
       const response = await fetch(
@@ -32,6 +31,7 @@ const Favorites = ({ favoriteReciepts, deleteAllFavorites }) => {
     }
   }, [recieptId]);
 
+  // Function to delete a receipt from favorites
   const deleteReciept = (id) => {
     for (let recieptIndex = 0; recieptIndex < favoriteReciepts.length; recieptIndex++) {
       if (favoriteReciepts[recieptIndex].id === id) {
@@ -39,6 +39,7 @@ const Favorites = ({ favoriteReciepts, deleteAllFavorites }) => {
         setModalIsOpen(false)
       }
     }
+    // Updating favorites in local storage
     localStorage.setItem("favoriteReciepts", JSON.stringify(favoriteReciepts));
   };
 
@@ -49,6 +50,7 @@ const Favorites = ({ favoriteReciepts, deleteAllFavorites }) => {
         isOpen={modalIsOpen}
         onRequestClose={() => setModalIsOpen(false)}
       >
+        {/* Modal content for receipt details */}
         <div className="recieptContainer">
           <h1 className="modalTitle">{recieptData.title}</h1>
           <button onClick={() => deleteReciept(recieptData.id)} className="deleteBtn">
@@ -65,9 +67,11 @@ const Favorites = ({ favoriteReciepts, deleteAllFavorites }) => {
             return <p className="modalTag" key={index}>{`#${cuisine}`}</p>;
           })}
       </Modal>
+      {/* Button to delete all favorite receipts */}
       <button onClick={deleteAllFavorites} className="deleteBtn">
         Delete All!
       </button>
+      {/* Displaying favorite receipts */}
       <div className="favorites">
         {favoriteReciepts &&
           favoriteReciepts.length > 0 &&

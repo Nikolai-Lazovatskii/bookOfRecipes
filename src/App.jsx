@@ -1,5 +1,4 @@
-import { useEffect } from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Reciepts from "./components/Reciepts";
@@ -8,9 +7,12 @@ import Favorites from "./components/Favorites";
 
 
 function App() {
-  const [searchTag, setSearchTag] = useState("");
-  const [recipes, setRecipes] = useState([]);
-  const [reciept, setReciept] = useState([]);
+  // State initialization for various elements of the application
+  const [searchTag, setSearchTag] = useState(""); // For storing search keyword
+  const [recipes, setRecipes] = useState([]); // For storing fetched recipes
+  const [reciept, setReciept] = useState([]); // For storing an individual receipt
+  // Loading favorite receipts from local storage, or initialize with an empty array
+
   const [favoriteReciepts, setFavoriteReciepts] = useState(() => {
     try {
       const savedFavorite = localStorage.getItem("favoriteReciepts");
@@ -25,8 +27,9 @@ function App() {
     }
   });
 
-  const API_KEY = "9265df2e52994c5ea5707dc3714479af";
+  const API_KEY = import.meta.env.VITE_API_KEY; // API Key for fetching recipes
 
+  // Function to fetch recipes based on the search tag
   useEffect(() => {
     const getRecipes = async () => {
       const response = await fetch(
@@ -41,14 +44,17 @@ function App() {
     }
   }, [searchTag]);
 
+  // Function to handle search input
   const getSearch = (text) => {
     setSearchTag(text);
   };
 
+  // Function to get an individual receipt
   const getReciept = (favReciept) => {
     setReciept(favReciept);
   };
 
+  // Function to add a receipt to favorites if it doesn't exist already
   useEffect(() => {
     if (!reciept) return;
     setFavoriteReciepts((prevReciepts) => {
@@ -63,14 +69,17 @@ function App() {
     });
   }, [reciept]);
 
+  // Function to delete all favorite receipts
   const deleteAllFavorites = () => {
     setFavoriteReciepts([])
   }
 
+  // Persisting favorite receipts in local storage
   useEffect(() => {
     localStorage.setItem("favoriteReciepts", JSON.stringify(favoriteReciepts));
   }, [favoriteReciepts]);
 
+  // Main render of the application
   return (
     <div className="app">
       <Router>
@@ -103,7 +112,7 @@ function App() {
           />
           <Route
             path="/favorites"
-            element={<Favorites favoriteReciepts={favoriteReciepts} deleteAllFavorites={deleteAllFavorites} />}
+            element={<Favorites favoriteReciepts={favoriteReciepts} deleteAllFavorites={deleteAllFavorites} API_KEY={API_KEY} />}
           />
         </Routes>
         <footer>Nikolai Lazovatskii, Pet Project - August 2023</footer>

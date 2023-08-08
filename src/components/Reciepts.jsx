@@ -5,15 +5,18 @@ import Modal from "react-modal";
 import "./Reciepts.css";
 
 const Reciepts = ({ recipes, API_KEY, getReciept }) => {
+  // State variables to handle modal and receipt information
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [recieptId, setRecieptId] = useState(0);
   const [recieptData, setRecieptData] = useState([]);
 
+  // Handler to open receipt modal with the given ID
   const recieptOpenHandler = (id) => {
     setRecieptId(id);
     setModalIsOpen(true);
   };
 
+  // Fetch receipt information based on receipt ID
   useEffect(() => {
     const getRecieptInfo = async () => {
       const response = await fetch(
@@ -28,6 +31,7 @@ const Reciepts = ({ recipes, API_KEY, getReciept }) => {
     }
   }, [recieptId]);
 
+  // Function to add the receipt to favorites
   const addToFavorites = () => {
     getReciept(recieptData);
   };
