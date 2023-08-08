@@ -6,6 +6,7 @@ import Reciepts from "./components/Reciepts";
 import Search from "./components/Search";
 import Favorites from "./components/Favorites";
 
+
 function App() {
   const [searchTag, setSearchTag] = useState("");
   const [recipes, setRecipes] = useState([]);

@@ -1,7 +1,7 @@
 .favorites {
     display: flex;
     flex-wrap: wrap; /* позволяет элементам переноситься на новую строку */
-    justify-content: flex-start; /* элементы идут один за другим без дополнительного пространства между ними */
+    justify-content: center; /* выравнивает элементы по центру */
     margin: 0 auto; /* центрирует контейнер на странице */
     max-width: 1200px; /* максимальная ширина контейнера */
     padding: 20px;
@@ -10,14 +10,14 @@
 }
 
 .recieptFav {
-    flex: 0 0 calc(16.66% - 20px); /* Ширина одного рецепта, чтобы 6 рецептов уместилось в одной строке. 20px учитывает возможные отступы между элементами */
+    flex: 0 0 calc(200px - 20px); /* Ширина одного рецепта фиксирована в 200px, 20px учитывает возможные отступы между элементами */
+    width: 200px; /* Фиксированная ширина */
     margin: 10px;
     padding: 10px;
     background-color: #ffffff;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     border-radius: 5px;
     transition: transform 0.3s ease;
-    flex-basis: calc(100% / 6); /* каждый рецепт занимает 1/6 доступной ширины */
     box-sizing: border-box; /* чтобы учесть padding и border */
     overflow: hidden; /* чтобы скрыть контент, который не умещается */
 }
